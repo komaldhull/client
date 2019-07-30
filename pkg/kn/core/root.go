@@ -22,6 +22,9 @@ import (
 	"path"
 
 	"github.com/knative/client/pkg/kn/commands"
+	"github.com/knative/client/pkg/kn/commands/broker"
+	"github.com/knative/client/pkg/kn/commands/connection"
+	"github.com/knative/client/pkg/kn/commands/importer"
 	"github.com/knative/client/pkg/kn/commands/revision"
 	"github.com/knative/client/pkg/kn/commands/route"
 	"github.com/knative/client/pkg/kn/commands/service"
@@ -73,6 +76,9 @@ func NewKnCommand(params ...commands.KnParams) *cobra.Command {
 	rootCmd.AddCommand(service.NewServiceCommand(p))
 	rootCmd.AddCommand(revision.NewRevisionCommand(p))
 	rootCmd.AddCommand(route.NewRouteCommand(p))
+	rootCmd.AddCommand(broker.NewBrokerCommand(p))
+	rootCmd.AddCommand(connection.NewConnectionCommand(p))
+	rootCmd.AddCommand(importer.NewImporterCommand(p))
 	rootCmd.AddCommand(commands.NewCompletionCommand(p))
 	rootCmd.AddCommand(commands.NewVersionCommand(p))
 

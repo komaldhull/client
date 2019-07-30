@@ -21,7 +21,9 @@ import (
 	"os"
 	"testing"
 
+	eventingv1alpha1 "github.com/knative/client/pkg/eventing/v1alpha1"
 	"github.com/knative/client/pkg/serving/v1alpha1"
+	fakeeventing "github.com/knative/eventing/pkg/client/clientset/versioned/typed/eventing/v1alpha1/fake"
 	"github.com/knative/serving/pkg/client/clientset/versioned/typed/serving/v1alpha1/fake"
 	"github.com/spf13/cobra"
 	"gotest.tools/assert"
@@ -51,6 +53,19 @@ func CreateTestKnCommand(cmd *cobra.Command, knParams *KnParams) (*cobra.Command
 	knParams.fixedCurrentNamespace = FakeNamespace
 	knCommand := newKnCommand(cmd, knParams)
 	return knCommand, fakeServing, buf
+}
+
+// CreateTestKnEventCommand helper for creating test commands
+func CreateTestKnEventCommand(cmd *cobra.Command, knParams *KnParams) (*cobra.Command, *fakeeventing.FakeEventingV1alpha1, *bytes.Buffer) {
+	buf := new(bytes.Buffer)
+	fakeEventing := &fakeeventing.FakeEventingV1alpha1{&client_testing.Fake{}}
+	knParams.Output = buf
+	knParams.NewEventClient = func(namespace string) (eventingv1alpha1.KnEventClient, error) {
+		return eventingv1alpha1.NewKnEventClient(fakeEventing, namespace), nil
+	}
+	knParams.fixedCurrentNamespace = FakeNamespace
+	knCommand := newKnCommand(cmd, knParams)
+	return knCommand, fakeEventing, buf
 }
 
 // CaptureStdout collects the current content of os.Stdout

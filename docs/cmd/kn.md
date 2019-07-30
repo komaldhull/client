@@ -19,7 +19,10 @@ Manage your Knative building blocks:
 
 ### SEE ALSO
 
+* [kn broker](kn_broker.md)	 - Broker command group
 * [kn completion](kn_completion.md)	 - Output shell completion code (default Bash)
+* [kn connection](kn_connection.md)	 - Connection command group
+* [kn importer](kn_importer.md)	 - Importer command group
 * [kn revision](kn_revision.md)	 - Revision command group
 * [kn route](kn_route.md)	 - Route command group
 * [kn service](kn_service.md)	 - Service command group

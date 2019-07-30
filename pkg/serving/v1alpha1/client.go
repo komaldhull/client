@@ -81,7 +81,7 @@ type ListConfig func(config *listConfig)
 type ListConfigs []ListConfig
 
 // add selectors to a list options
-func (opts ListConfigs) toListOptions() v1.ListOptions {
+func (opts ListConfigs) ToListOptions() v1.ListOptions {
 	listConfig := listConfig{labels.Set{}, fields.Set{}}
 	for _, f := range opts {
 		f(&listConfig)
@@ -138,7 +138,7 @@ func (cl *knClient) GetService(name string) (*v1alpha1.Service, error) {
 
 // List services
 func (cl *knClient) ListServices(config ...ListConfig) (*v1alpha1.ServiceList, error) {
-	serviceList, err := cl.client.Services(cl.namespace).List(ListConfigs(config).toListOptions())
+	serviceList, err := cl.client.Services(cl.namespace).List(ListConfigs(config).ToListOptions())
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +212,7 @@ func (cl *knClient) DeleteRevision(name string) error {
 
 // List revisions
 func (cl *knClient) ListRevisions(config ...ListConfig) (*v1alpha1.RevisionList, error) {
-	revisionList, err := cl.client.Revisions(cl.namespace).List(ListConfigs(config).toListOptions())
+	revisionList, err := cl.client.Revisions(cl.namespace).List(ListConfigs(config).ToListOptions())
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +221,7 @@ func (cl *knClient) ListRevisions(config ...ListConfig) (*v1alpha1.RevisionList,
 
 // List routes
 func (cl *knClient) ListRoutes(config ...ListConfig) (*v1alpha1.RouteList, error) {
-	routeList, err := cl.client.Routes(cl.namespace).List(ListConfigs(config).toListOptions())
+	routeList, err := cl.client.Routes(cl.namespace).List(ListConfigs(config).ToListOptions())
 	if err != nil {
 		return nil, err
 	}
